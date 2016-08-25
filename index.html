@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+	<head></head>
+	<body>
+	<div id="id01">0</div>
+	<input type="button" onClick="getAnalog()" value="Read From Analog" /><br/>
+	<input type="button" onClick="ToggleLight()" value="Toggle the lights!" />
+	<script>
+		function getAnalog(){
+			var xmlhttp = new XMLHttpRequest();
+			var url = "/R0";
+
+			xmlhttp.onreadystatechange = function() {
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					var response = JSON.parse(xmlhttp.responseText);
+					myFunction(response);
+				}
+			};
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send();
+
+			function myFunction(res) {
+				document.getElementById("id01").innerHTML = res.Response;
+			}
+		}
+		on = false
+		function ToggleLight(){
+		
+			var xmlhttp = new XMLHttpRequest();
+			if (on){
+				var url = "/H3";
+			}
+			else{
+				var url = "/L3";
+			}
+			
+			on = !on
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send();
+		}
+	</script>
+	
+	</body>
+</html>
